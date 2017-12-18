@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+        <h:head>
+        <title>My Stock Application</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+
+        <!-- Custom styles for this template -->
+        <h:outputStylesheet library="css" name="style.css" />
+
+    </h:head>
+    <h:body>
+        <div class="container">
+           
+    	<h:form>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12" style="width:100%;text-align:right">
+                        <span style="float:left;">
+                            <h:panelGroup rendered="#{not empty userBean.username}">
+                                <h3>Welcome #{userBean.username}, Manager Home</h3> 
+                                <h:commandButton value="Update Manager Profile" outcome="updateManagerProfile" action="#{updateProfileController.getManagerUpdateProfile}" style="text-align: right;"/>
+								<h:commandButton value="Show Manager Watch List"  action="#{stockApiBean.getmanagerStocks}" style="text-align: right;"/>                                 
+                                <h5>Manager #{userBean.username} total Commision: #{userBean.mtotalCommission} </h5>
+                            </h:panelGroup>
+                        </span>
+                        <span style="float:right;"><h:commandLink action="#{userBean.logout}" value="Logout" outcome="index" style="text-align: right;" /></span>
+                    </div>
+                </div>
+            </h:form>
+            
+
+            <div class="container">
+                <legend>Watch List </legend>
+	<h:messages infoStyle="color:green" errorStyle="color:darked" style="color: red;"/>
+                <div class="row">
+	
+                    <h:form>
+                       <h:dataTable value="#{stockApiBean.mstockList}" var="stock" styleClass="table table-bordered" >
+                       <h:column>
+                       <f:facet name="header">Stock Name</f:facet>
+    					#{stock.stockName} 
+                       </h:column>
+                        <h:column>
+                       <f:facet name="header">Stock Symbol</f:facet>
+    					#{stock.stockSymbol}
+                       </h:column>
+                      	
+                       </h:dataTable>
+                    </h:form>
+                </div>
+
+               
+            </div>
+        </div>
+    </h:body>
+</html>

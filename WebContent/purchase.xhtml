@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ 	  xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Purchase Stock</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+
+        <!-- Custom styles for this template -->
+        <h:outputStylesheet library="css" name="style.css" />
+		<h:outputScript library="scripts/" name="jquery-3.2.1.min.js" ></h:outputScript>
+<!--         <script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+ -->        <script type="text/javascript">
+            function calculateAmount() {
+                $("#purchase .amt").val(($("#purchase .purchasePrice").val() * $("#purchase .qty").val()).toFixed(2));
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <!-- Add your site or application content here -->
+        <div class="container">
+        <h:form>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12" style="width:100%;text-align:right">
+                        <span style="float:left;">
+                            <h:panelGroup rendered="#{not empty userBean.username}">
+                                <h3>Welcome #{userBean.username} User Home</h3> 
+                                <h:commandButton value="Update Profile" outcome="updateProfile" action="#{updateProfileController.getUpdateProfile}" style="text-align: right;"/>
+								<h:commandButton value="Show Watch List" outcome="watchList" action="#{stockApiBean.getmyStocks}" style="text-align: right;"/>
+                               <h:form>
+                                <h:commandButton value="Manager Selection" outcome="managerSelection" action="#{managerSelectionController.getManagerListForUser}" style="text-align: right;">
+                                </h:commandButton>
+                                </h:form>
+							<h:commandButton action="#{viewUserHistoryController.getUserHistory}"	value="Get User History">
+								<f:param name="userId" value="#{sessionScope.userId}" />
+							</h:commandButton>
+                                <h5>User #{userBean.username} Balance: #{userBean.balance}</h5>
+                            </h:panelGroup>
+                        </span>
+                        <span style="float:right;"><h:commandLink action="#{userBean.logout}" value="Logout" outcome="index" style="text-align: right;" /></span>
+                    </div>
+                </div>
+            </h:form>
+        	
+         <div class="wrapper">
+					
+            <div class="container bootstrap snippet">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h1>
+                            Welcome <h:outputText value="#{sessionScope.username}" />
+                            
+                        </h1>
+                        <span style="float:right;"><h:link value="Logout" outcome="index" style="text-align: right;"/></span>
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="#" class="pull-right">
+                            <img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></img>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--left col-->
+                    <div class="col-sm-3">
+                        
+                    </div>
+
+                    <!-- main column -->
+                    <div class="col-sm-6">
+                        <h:form id="purchase">
+                           <h:messages infoStyle="color:green" errorStyle="color:darked" style="color: red;"/>
+                            Stock Name: <h:inputText binding="#{purchaseSymbol}" id="symbol" styleClass="form-control purchaseSymbol" value="#{stockApiBean.purchaseSymbol}" required="true"/><br />
+                            Price: <h:inputText binding="#{purchasePrice}" readonly="true" id="price" styleClass="form-control purchasePrice" value="#{stockApiBean.purchasePrice}" required="true"/><br />
+                            Quantity: <h:inputText binding="#{qty}" id="qty" styleClass="form-control qty" value="#{stockApiBean.qty}" required="true" onkeyup="calculateAmount()"/><br />
+                            Amount: <h:inputText binding="#{amt}" id="amt" styleClass="form-control amt" value="#{stockApiBean.amt}" required="true"/><br />
+                            <h:commandButton styleClass="btn btn-success btn-login-submit" value="Purchase" action="#{stockApiBean.createDbRecord(purchaseSymbol.value, purchasePrice.value, qty.value, amt.value)}"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+       </div>
+    </h:body>
+</html>

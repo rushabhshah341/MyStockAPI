@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<c:set target="#{flash}" property="keepMessages" value="true" />
+    <h:head>
+        <title>My Stock Application</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		     
+        <h:outputStylesheet library="lib/font-awesome/css/" name="font-awesome.css" />
+        <h:outputStylesheet library="lib/Ionicons/css/" name="ionicons.css" />
+        <h:outputStylesheet library="lib/perfect-scrollbar/css/" name="perfect-scrollbar.css" />
+        <h:outputStylesheet library="lib/rickshaw/" name="rickshaw.min.css" />
+        
+        <h:outputStylesheet library="css" name="style.css" />
+        <!-- <h:outputStylesheet library="css" name="starlight.css" /> -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+    </h:head>
+    <h:body>
+        <div class="container">
+            <h:form>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12" style="width:100%;text-align:right">
+                        <span style="float:left;">
+                            <h:panelGroup rendered="#{not empty userBean.username}">
+                                <h3>Welcome #{userBean.username} User Home</h3> 
+                                <h:commandButton value="Update Profile" outcome="updateProfile" action="#{updateProfileController.getUpdateProfile}" style="text-align: right;"/>
+								<h:commandButton value="Show Watch List" outcome="watchList" action="#{stockApiBean.getmyStocks}" style="text-align: right;"/>
+                               <h:form>
+                                <h:commandButton value="Manager Selection" outcome="managerSelection" action="#{managerSelectionController.getManagerListForUser}" style="text-align: right;">
+                                </h:commandButton>
+                                </h:form>
+							<h:commandButton action="#{viewUserHistoryController.getUserHistory}"	value="Get User History">
+								<f:param name="userId" value="#{sessionScope.userId}" />
+							</h:commandButton>
+                                <h5>User #{userBean.username} Balance: #{sessionScope.balance}</h5>
+                            </h:panelGroup>
+                        </span>
+                        <span style="float:right;"><h:commandLink action="#{userBean.logout}" value="Logout" outcome="index" style="text-align: right;" /></span>
+                    </div>
+                </div>
+            </h:form>
+<h:messages infoStyle="color:green" errorStyle="color:darked" style="color: red;"/>
+            <div class="container">
+                <legend>Search Data</legend>
+
+                <div class="row">
+
+                    <h:form>
+
+                        <label for="sel1">Stock: </label>
+                        <h:selectOneMenu id="symbol" value="#{stockApiBean.selectedSymbol}" valueChangeListener="#{stockApiBean.changeDD}">
+                            <f:selectItems value="#{stockApiBean.availableSymbols}" />
+                        </h:selectOneMenu>
+                       
+                               
+           
+                        <label for="sel1">Interval: </label>
+                        <h:selectOneMenu id="interval" value="#{stockApiBean.selectedInterval}">
+                            <f:selectItems value="#{stockApiBean.availableIntervals}" />
+                        </h:selectOneMenu>
+                        <br />
+                        <h:commandButton value="Get Data" action="#{stockApiBean.timeseries}" styleClass="btn btn-success" />
+                    </h:form>
+                </div>
+
+                <h:panelGroup rendered="#{not empty stockApiBean.table1Markup}">
+                    <h:outputText value="#{stockApiBean.table1Markup}" escape="false" styleClass="preformatted table-bordered" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{not empty stockApiBean.table2Markup}">
+                    <h:outputText value="#{stockApiBean.table2Markup}" escape="false" styleClass="preformatted" />
+                </h:panelGroup>
+                <h:form>
+                <h:commandButton rendered="#{not empty stockApiBean.table1Markup}" value="Add to Watch List" action="#{stockApiBean.addtoWatchList}" styleClass="btn btn-success" />
+                </h:form>
+            </div>
+        </div>
+        
+    </h:body>
+</html>

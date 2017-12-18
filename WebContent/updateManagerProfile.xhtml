@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<c:set target="#{flash}" property="keepMessages" value="true" />
+    <h:head>
+        <title>My Stock Application</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		     
+        <h:outputStylesheet library="lib/font-awesome/css/" name="font-awesome.css" />
+        <h:outputStylesheet library="lib/Ionicons/css/" name="ionicons.css" />
+        <h:outputStylesheet library="lib/perfect-scrollbar/css/" name="perfect-scrollbar.css" />
+        <h:outputStylesheet library="lib/rickshaw/" name="rickshaw.min.css" />
+        
+        <h:outputStylesheet library="css" name="style.css" />
+        <!-- <h:outputStylesheet library="css" name="starlight.css" /> -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+    </h:head>
+    <h:body>
+    <ui:composition template="template/common/commonLayout.xhtml">
+			    	
+			<!-- <ui:define name="content">
+    			<h2>This is page1 content</h2>
+    		</ui:define> -->
+    	<ui:define name="content">
+    		<h2 class="text-center">Update Manager Profile</h2>
+    		<div class="main">        
+	        <div class="container">
+				<div class="row">
+					<div class="col-md-3 col-lg-3 col-xs-12">
+					
+					</div>
+					<div class="col-md-6 col-md-offset-3 col-lg-6 col-xs-12">
+					<h2 class="heading"></h2>
+						<div class="paneled login-panel">
+								<div class="panel-heading headings">
+									<div class="row">
+										<div class="col-xs-6 col-md-6 col-lg-6">
+											<h:link value="Search Stocks" class="active" outcome="managerhome" id="loginreg"></h:link>
+										</div>
+									</div>
+								</div>
+							</div>
+					
+						<div class="panel-body mainarea">
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+									<h:form id="updateprofile" class="">
+							<h:messages infoStyle="color:green" errorStyle="color:darked" style="color: red;"/>
+										<div class="form-group">
+									<h:outputLabel value="First Name" />
+									<h:inputText value="#{updateProfileController.firstName}" id="firstname"
+										a:placeholder="First Name" styleClass="form-control"
+										required="true" > 
+										<f:validateRegex pattern="^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$" />
+										</h:inputText>
+								</div>
+								
+								<div class="form-group">
+									<h:outputLabel value="Last Name" />
+									<h:inputText value="#{updateProfileController.lastName}" id="lastname"
+										a:placeholder="Last Name" styleClass="form-control"
+										required="true" >
+										<f:validateRegex pattern="^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$" />
+										</h:inputText>
+								</div>
+								
+								
+								<div class="form-group">
+									<h:outputLabel value="Email" />
+									<h:inputText value="#{updateProfileController.emailId}" id="emailid"
+										a:placeholder="rushabhshah341@gmail.com"
+										styleClass="form-control" required="true"  validatorMessage="Email format is not valid">
+										<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+</h:inputText>
+								</div>
+
+								<div class="form-group">
+									<h:outputLabel value="User Name" />
+									<h:inputText value="#{updateProfileController.userName}" id="username"
+										a:placeholder="Username" styleClass="form-control"
+										required="true" />
+								</div>
+
+								<div class="form-group">
+									<h:outputLabel value="Password" />
+									<h:inputText value="#{updateProfileController.password}" id="password"
+										a:placeholder="password" styleClass="form-control"
+										required="true" />
+								</div>
+								<div class="form-group">
+									<h:outputLabel value="Phone Number" />
+									<h:inputText value="#{updateProfileController.phoneNumber}" id="phone"
+										a:placeholder="1234567890" styleClass="form-control"
+										required="true" />
+								</div>
+								<div class="form-group">
+									<h:outputLabel value="Address" />
+									<h:inputText value="#{updateProfileController.address}" id="address"
+										a:placeholder="xyz street, abc" styleClass="form-control"
+										required="true" />
+								</div>
+								<div class="form-group">
+									<h:outputLabel value="total Commission earned : " />
+									<h:outputText value="#{updateProfileController.mtotalCommission}"></h:outputText>
+								</div>
+										<div class="form-group text-center">
+											<div class="row">
+												<div class="col-sm-6 col-sm-offset-3">
+			                    	    	        <h:commandButton value="Update Manager Profile" action="#{updateProfileController.updateManagerProfile}" styleClass="form-control btn btn-primary btn-login btn-login-submit" name="update-submit" >
+			                    	    	        <!-- <f:ajax execute="@form" render="@form" /> -->
+			                    	    	        </h:commandButton>
+			    					            </div>
+											</div>
+										</div>
+									</h:form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-lg-3 col-xs-12"></div>
+				</div>
+				
+			</div>
+		</div>
+		<h:outputScript library="lib//popper.js/" name="popper.js" />
+        <!-- Bootstrap core JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        </ui:define>
+        <ui:define name="footer">
+    			<h2>This is update profile Footer</h2>
+    		</ui:define>
+        </ui:composition>
+        
+    </h:body>
+</html>
