@@ -166,6 +166,10 @@ public class ViewUserHistoryController {
 	  return "sell";
 	}
 	public String updateSellRecord(){
+		if(sellQuantity>quantity){
+			 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, " You can only sell "+quantity+" shares",""));
+			return "sell"; 
+		}
 		try {
         	int userId=0;
         	Object user = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userId");

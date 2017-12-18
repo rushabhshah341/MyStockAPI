@@ -4,6 +4,7 @@ public class Stock {
 private int stockId;
 private String stockName;
 private String stockSymbol;
+private double price;
 public int getStockId() {
 	return stockId;
 }
@@ -21,5 +22,11 @@ public String getStockSymbol() {
 }
 public void setStockSymbol(String stockSymbol) {
 	this.stockSymbol = stockSymbol;
+}
+public double getPrice() {
+	return price;
+}
+public void setPrice(double price) {
+	this.price = price;
 }
 }
